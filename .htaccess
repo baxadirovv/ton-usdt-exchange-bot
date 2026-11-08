@@ -1,0 +1,29 @@
+# =====================================================================
+#  XAVFSIZLIK — bu papkada bot kodi va .env (HAMYON KALITI!) bor.
+#  Internetdan faqat /pay manzili ochiq, qolgan hamma narsa yopiq.
+#  Apache / LiteSpeed (cPanel, DirectAdmin, ISPmanager) uchun.
+#  nginx ishlatilsa — README dagi nginx sozlamasini qo'llang!
+# =====================================================================
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # /pay yoki /pay.php -> public/pay.php
+    RewriteRule ^pay(\.php)?/?$ public/pay.php [L,QSA]
+    # ichki yo'naltirishdan keyin faqat shu fayl ochiq
+    RewriteRule ^public/pay\.php$ - [L]
+    # SSL sertifikat (AutoSSL / Let's Encrypt) tekshiruvi uchun
+    RewriteRule ^\.well-known/ - [L]
+    # qolgan hamma narsa — 403
+    RewriteRule ^ - [F,L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    # mod_rewrite yo'q bo'lsa — hammasi yopiq (to'lov URL: .../public/pay.php emas, hosting sozlamasini tekshiring)
+    Require all denied
+</IfModule>
+
+# Qo'shimcha himoya: maxfiy fayllar hech qachon berilmaydi
+<FilesMatch "(^\.|\.(env|py|pyc|db|sqlite|log|md|txt|sh|ini|cfg|toml|lock|json|example)$)">
+    Require all denied
+</FilesMatch>

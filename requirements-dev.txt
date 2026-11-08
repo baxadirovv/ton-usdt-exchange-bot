@@ -1,0 +1,3 @@
+# Test dependencies (verified together with requirements.txt)
+-r requirements.txt
+pytest==9.2.0

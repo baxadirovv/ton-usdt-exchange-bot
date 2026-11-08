@@ -1,0 +1,8 @@
+# Domen papkasi (document root) shu "public" papkaga qaratilgan bo'lsa ishlaydi:
+#   https://cripto.smm-api.uz/pay  ->  pay.php
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^pay/?$ pay.php [L,QSA]
+</IfModule>
